@@ -7,8 +7,13 @@
     "test": "test",
     "task1_1": "nodemon ./hw1/task1_1.js",
     "task1_2": "nodemon ./hw1/task1_2.js",
-    "task1_2_pipe": "nodemon ./hw1/task1_2_pipeline.js"
-
+    "task1_2_pipe": "nodemon ./hw1/task1_2_pipeline.js",
+    "task1_1_babel": "nodemon ./hw1_babel/task1_1_babel.mjs",
+    "task1_2_babel": "nodemon ./hw1_babel/task1_2_babel.mjs",
+    "task1_2_babel_pipe": "nodemon ./hw1_babel/task1_2_pipeline_babel.mjs",
+    "start_task1_1": "babel ./hw1_babel/task1_1_babel.mjs -d dist && nodemon dist/task1_1_babel.mjs",
+    "start_task1_2": "babel ./hw1_babel/task1_2_babel.mjs -d dist && nodemon dist/task1_2_babel.mjs",
+    "start_task1_2_pipe": "babel ./hw1_babel/task1_2_pipeline_babel.mjs -d dist && nodemon dist/task1_2_pipeline_babel.mjs"
   },
   "keywords": [
     "homework",
@@ -19,6 +24,9 @@
   "author": "Matvey Prupas",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "@babel/node": "^7.15.4",
     "nodemon": "^2.0.12"
   },
   "dependencies": {

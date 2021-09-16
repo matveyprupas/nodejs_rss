@@ -1,5 +1,4 @@
-const fs = require('fs');
-var readline = require('readline');
+import readline from 'readline';
 
 var rl = readline.createInterface({
   input: process.stdin,
