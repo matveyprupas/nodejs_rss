@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "task1_1": "nodemon ./hw1/task1_1.js"
+    "task1_1": "nodemon ./hw1/task1_1.js",
+    "task1_2": "nodemon ./hw1/task1_2.js",
+    "task1_2_pipe": "nodemon ./hw1/task1_2_pipeline.js"
 
   },
   "keywords": [
@@ -18,5 +20,8 @@
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.12"
+  },
+  "dependencies": {
+    "csvtojson": "^2.0.10"
   }
 }
