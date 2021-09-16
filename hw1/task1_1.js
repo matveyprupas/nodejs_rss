@@ -1,1 +1,12 @@
-console.log("task1.1");
+const fs = require('fs');
+var readline = require('readline');
+
+var rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+  terminal: false
+});
+
+rl.on('line', function(line){
+    console.log(line.split("").reverse().join(""));
+})

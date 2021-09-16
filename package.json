@@ -1,0 +1,22 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "tasks for RSS nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "task1_1": "nodemon ./hw1/task1_1.js"
+
+  },
+  "keywords": [
+    "homework",
+    "prupas",
+    "rss",
+    "nodeJS"
+  ],
+  "author": "Matvey Prupas",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
