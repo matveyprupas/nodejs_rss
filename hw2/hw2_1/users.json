@@ -1,0 +1,33 @@
+{
+    "admin": {
+        "id": "admin",
+        "login": "admin",
+        "password": "123123123",
+        "age": 18,
+        "isDeleted": false
+    },
+
+    "user1": {
+        "id": "user1",
+        "login": "Andrey",
+        "password": "123589",
+        "age": 19,
+        "isDeleted": false
+    },
+    
+    "user2": {
+        "id": "user2",
+        "login": "Gleb",
+        "password": "987654321",
+        "age": 55,
+        "isDeleted": false
+    },
+    
+    "user3": {
+        "id": "user333",
+        "login": "Kirill",
+        "password": "123456",
+        "age": 82,
+        "isDeleted": false
+    }
+}

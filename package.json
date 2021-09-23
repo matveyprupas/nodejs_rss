@@ -13,7 +13,8 @@
     "task1_2_babel_pipe": "nodemon ./hw1_babel/task1_2_pipeline_babel.mjs",
     "start_task1_1": "babel ./hw1_babel/task1_1_babel.mjs -d dist && nodemon dist/task1_1_babel.mjs",
     "start_task1_2": "babel ./hw1_babel/task1_2_babel.mjs -d dist && nodemon dist/task1_2_babel.mjs",
-    "start_task1_2_pipe": "babel ./hw1_babel/task1_2_pipeline_babel.mjs -d dist && nodemon dist/task1_2_pipeline_babel.mjs"
+    "start_task1_2_pipe": "babel ./hw1_babel/task1_2_pipeline_babel.mjs -d dist && nodemon dist/task1_2_pipeline_babel.mjs",
+    "task2_1": "nodemon ./hw2/hw2_1/main.js"
   },
   "keywords": [
     "homework",
@@ -27,9 +28,12 @@
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
     "@babel/node": "^7.15.4",
+    "eslint": "^7.32.0",
     "nodemon": "^2.0.12"
   },
   "dependencies": {
-    "csvtojson": "^2.0.10"
+    "csvtojson": "^2.0.10",
+    "express": "^4.17.1",
+    "http": "0.0.1-security"
   }
 }
