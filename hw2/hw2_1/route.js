@@ -1,28 +1,31 @@
 const express = require('express');
-const users = require('./users.json');
+const users = require('./users');
 var readline = require('readline');
 
 let router = express.Router();
 
 router.get('/:id', (req, res) => {
+
+    console.log(id);
     
     res
         .status(200)
         .send( `User data:
                 login: ${users[req.params.id].login}
-                age: ${users[req.params.id].age}` );
+                age: ${users[req.params.id].age}` )
+        .end("Get ended");
 
 });
 
-// var rl = readline.createInterface({
-//     input: process.stdin,
-//     output: process.stdout,
-//     terminal: false
-//   });
+var rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    terminal: false
+  });
 
-// rl.on('line', (line) => {
-//     console.log(line.toUpperCase());
-// });
+rl.on('line', (line) => {
+    console.log(line.toUpperCase());
+});
 
 router.post('/:id', (req, res) => {
     let id = req.params.id;
@@ -54,7 +57,7 @@ router.delete('/:id', (req, res) => {
             // console.log(users[key]['isDeleted']);
             users[key]['isDeleted'] = true;
             // console.log(users[key]['isDeleted']);
-            
+
             res
                 .status(200)
                 .send( `User with this ID (${id}) deleted!` );
