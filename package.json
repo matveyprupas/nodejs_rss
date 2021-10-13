@@ -16,7 +16,8 @@
     "start_task1_1": "babel ./hw1_babel/task1_1_babel.mjs -d dist && nodemon dist/task1_1_babel.mjs",
     "start_task1_2": "babel ./hw1_babel/task1_2_babel.mjs -d dist && nodemon dist/task1_2_babel.mjs",
     "start_task1_2_pipe": "babel ./hw1_babel/task1_2_pipeline_babel.mjs -d dist && nodemon dist/task1_2_pipeline_babel.mjs",
-    "task2_1": "nodemon ./hw2/hw2_1/main.js"
+    "task2_1": "nodemon ./hw2/hw2_1/main.js",
+    "task2_2": "nodemon ./hw2/hw2_2/main.js"
   },
   "keywords": [
     "homework",
@@ -38,6 +39,8 @@
   "dependencies": {
     "csvtojson": "^2.0.10",
     "express": "^4.17.1",
-    "http": "0.0.1-security"
+    "express-joi-validation": "^5.0.0",
+    "http": "0.0.1-security",
+    "joi": "^17.4.2"
   }
 }
