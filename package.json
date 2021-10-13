@@ -1,0 +1,46 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "tasks for RSS nodejs",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts hw2 hw2/hw2_1",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "test",
+    "task1_1": "nodemon ./hw1/task1_1.js",
+    "task1_2": "nodemon ./hw1/task1_2.js",
+    "task1_2_pipe": "nodemon ./hw1/task1_2_pipeline.js",
+    "task1_1_babel": "nodemon ./hw1_babel/task1_1_babel.mjs",
+    "task1_2_babel": "nodemon ./hw1_babel/task1_2_babel.mjs",
+    "task1_2_babel_pipe": "nodemon ./hw1_babel/task1_2_pipeline_babel.mjs",
+    "start_task1_1": "babel ./hw1_babel/task1_1_babel.mjs -d dist && nodemon dist/task1_1_babel.mjs",
+    "start_task1_2": "babel ./hw1_babel/task1_2_babel.mjs -d dist && nodemon dist/task1_2_babel.mjs",
+    "start_task1_2_pipe": "babel ./hw1_babel/task1_2_pipeline_babel.mjs -d dist && nodemon dist/task1_2_pipeline_babel.mjs",
+    "task2_1": "nodemon ./hw2/hw2_1/main.js",
+    "task2_2": "nodemon ./hw2/hw2_2/main.js"
+  },
+  "keywords": [
+    "homework",
+    "prupas",
+    "rss",
+    "nodeJS"
+  ],
+  "author": "Matvey Prupas",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "@babel/node": "^7.15.4",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.25.2",
+    "nodemon": "^2.0.12"
+  },
+  "dependencies": {
+    "csvtojson": "^2.0.10",
+    "express": "^4.17.1",
+    "express-joi-validation": "^5.0.0",
+    "http": "0.0.1-security",
+    "joi": "^17.4.2"
+  }
+}
