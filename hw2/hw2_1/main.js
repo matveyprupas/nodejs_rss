@@ -41,30 +41,66 @@ app.get("/api/users/:id", (req, res) => {
 });
 
 app.post("/api/users/", jsonParser, function (req, res) {
-    console.log(req);
-
     if(!req.body) return res.status(400).end("Oops...");
-
-    const userName = req.body.name;
+    
+    const userID = req.body.id;
+    const userLogin = req.body.login;
+    const userPassword = req.body.password;
     const userAge = req.body.age;
-    let user = {name: userName, age: userAge};
+    const isUserDeleted = req.body.isDeleted;
 
-    let data = fs.readFileSync(filePath, "utf8");
-    let users = JSON.parse(data);
-    // console.log(user);
+    let user = {id: userID, login: userLogin, password: userPassword, age: userAge, isDeleted: isUserDeleted};
 
-    // находим максимальный id
-    // const id = Math.max.apply(Math,users.map(function(o){return o.id;}))
-    // // // увеличиваем его на единицу
-    // user.id = id+1;
-    // // // добавляем пользователя в массив
-    // users.push(user);
-    data = JSON.stringify({...users, user});
-    // // // перезаписываем файл с новыми данными
-    fs.writeFileSync("users.json", data);
-    res.send(user);
+    let dataJSON = fs.readFileSync(filePath, "utf8");
+    let users = JSON.parse(dataJSON);
+
+    if (users[userID]) return res.status(400).end("Oops... User with this ID already exist");
+
+    dataJSON = JSON.stringify({...users, [userID]: user});
+    fs.writeFileSync(filePath, dataJSON);
+
+    res.status(200).send(JSON.parse(dataJSON));
 });
 
+app.put("/api/users/", jsonParser, function (req, res) {
+    if(!req.body) return res.status(400).end("Oops...");
+    
+    const userID = req.body.id;
+    const userLogin = req.body.login;
+    const userPassword = req.body.password;
+    const userAge = req.body.age;
+    const isUserDeleted = req.body.isDeleted;
+
+    let user = {id: userID, login: userLogin, password: userPassword, age: userAge, isDeleted: isUserDeleted};
+
+    let dataJSON = fs.readFileSync(filePath, "utf8");
+    let users = JSON.parse(dataJSON);
+
+    if (!users[userID]) return res.status(400).end("Oops... User with this ID didn't find");
+
+    dataJSON = JSON.stringify({...users, [userID]: user});
+    fs.writeFileSync(filePath, dataJSON);
+
+    res.status(200).send(JSON.parse(dataJSON));
+});
+
+app.delete("/api/users/:id", function (req, res) {
+    
+    const userID = req.params.id;
+    
+    let dataJSON = fs.readFileSync(filePath, "utf8");
+    let users = JSON.parse(dataJSON);
+    let deletingUser = users[userID];
+
+    if (!deletingUser) return res.status(404).end("Oops... I cannot DELETE user with this ID. I couldn't find him");
+
+    deletingUser.isDeleted = true;
+
+    dataJSON = JSON.stringify({...users, [userID]: deletingUser});
+    fs.writeFileSync(filePath, dataJSON);
+
+    res.status(200).send(JSON.parse(dataJSON));
+});
 
 app.listen(port, function(){
     console.log(`Server running on port ${port}`);
