@@ -1,107 +1,129 @@
-const express = require('express')
-const fs = require("fs");
+const express = require('express');
+const fs = require('fs');
 
-let app = express();
+const app = express();
 const jsonParser = express.json();
 
-let port = 8080;
+const port = 8080;
 
-app.use(express.static("public"));
-    
-const filePath = "hw2/hw2_1/users.json";
+app.use(express.static('public'));
 
-app.get("/api/users", (req, res) => {
-    const content = fs.readFileSync(filePath, 'utf8');
-    const users = JSON.parse(content);
-    res.send(users);
-});
+const filePath = 'hw2/hw2_1/users.json';
 
-app.get("/api/users/:id", (req, res) => {
-    const myId = req.params.id;
-    const content = fs.readFileSync(filePath, 'utf8');
-    const users = JSON.parse(content);
-    var user;
+app.get('/api/users', (req, res) => {
+  if (!req.query.name || !req.query.limit) return res.status(404).end('Oops... We need parameters NAME and LIMIT');
 
-    for (let key in users) {
+  const contentJSON = fs.readFileSync(filePath, 'utf8');
+  const users = JSON.parse(contentJSON);
+  const resultArr = [];
 
-        if (users[key]["id"] === myId) {
-            user = (users[key]);
-            break;
-        }
+  // eslint-disable-next-line no-restricted-syntax
+  for (const key in users) {
+    if ({}.hasOwnProperty.call(users, key)) {
+      const login = users[key].login.toLowerCase();
+      const searchLogin = req.query.name.toLowerCase();
+      const maxArrLength = req.query.limit;
+
+      if (resultArr.length >= maxArrLength) break;
+
+      if (login.includes(searchLogin)) {
+        resultArr.push(users[key]);
+      }
     }
-    if (user) {
-        res
-            .status(200)    
-            .send(user);
-    } else {
-        res
-            .status(404)
-            .end("Oops... User is absent");
+  }
+
+  return res.status(200).send(resultArr);
+});
+
+app.get('/api/users/:id', (req, res) => {
+  const myId = req.params.id;
+  const content = fs.readFileSync(filePath, 'utf8');
+  const users = JSON.parse(content);
+  let user;
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const key in users) {
+    if (users[key].id === myId) {
+      user = (users[key]);
+      break;
     }
+  }
+  if (user) {
+    res
+      .status(200)
+      .send(user);
+  } else {
+    res
+      .status(404)
+      .end('Oops... User is absent');
+  }
 });
 
-app.post("/api/users/", jsonParser, function (req, res) {
-    if(!req.body) return res.status(400).end("Oops...");
-    
-    const userID = req.body.id;
-    const userLogin = req.body.login;
-    const userPassword = req.body.password;
-    const userAge = req.body.age;
-    const isUserDeleted = req.body.isDeleted;
+app.post('/api/users/', jsonParser, (req, res) => {
+  if (!req.body) return res.status(404).end('Oops...');
 
-    let user = {id: userID, login: userLogin, password: userPassword, age: userAge, isDeleted: isUserDeleted};
+  const userID = req.body.id;
+  const userLogin = req.body.login;
+  const userPassword = req.body.password;
+  const userAge = req.body.age;
+  const isUserDeleted = req.body.isDeleted;
 
-    let dataJSON = fs.readFileSync(filePath, "utf8");
-    let users = JSON.parse(dataJSON);
+  const user = {
+    id: userID, login: userLogin, password: userPassword, age: userAge, isDeleted: isUserDeleted,
+  };
 
-    if (users[userID]) return res.status(400).end("Oops... User with this ID already exist");
+  let dataJSON = fs.readFileSync(filePath, 'utf8');
+  const users = JSON.parse(dataJSON);
 
-    dataJSON = JSON.stringify({...users, [userID]: user});
-    fs.writeFileSync(filePath, dataJSON);
+  if (users[userID]) return res.status(404).end('Oops... User with this ID already exist');
 
-    res.status(200).send(JSON.parse(dataJSON));
+  dataJSON = JSON.stringify({ ...users, [userID]: user });
+  fs.writeFileSync(filePath, dataJSON);
+
+  return res.status(200).send(JSON.parse(dataJSON));
 });
 
-app.put("/api/users/", jsonParser, function (req, res) {
-    if(!req.body) return res.status(400).end("Oops...");
-    
-    const userID = req.body.id;
-    const userLogin = req.body.login;
-    const userPassword = req.body.password;
-    const userAge = req.body.age;
-    const isUserDeleted = req.body.isDeleted;
+app.put('/api/users/', jsonParser, (req, res) => {
+  if (!req.body) return res.status(404).end('Oops...');
 
-    let user = {id: userID, login: userLogin, password: userPassword, age: userAge, isDeleted: isUserDeleted};
+  const userID = req.body.id;
+  const userLogin = req.body.login;
+  const userPassword = req.body.password;
+  const userAge = req.body.age;
+  const isUserDeleted = req.body.isDeleted;
 
-    let dataJSON = fs.readFileSync(filePath, "utf8");
-    let users = JSON.parse(dataJSON);
+  const user = {
+    id: userID, login: userLogin, password: userPassword, age: userAge, isDeleted: isUserDeleted,
+  };
 
-    if (!users[userID]) return res.status(400).end("Oops... User with this ID didn't find");
+  let dataJSON = fs.readFileSync(filePath, 'utf8');
+  const users = JSON.parse(dataJSON);
 
-    dataJSON = JSON.stringify({...users, [userID]: user});
-    fs.writeFileSync(filePath, dataJSON);
+  if (!users[userID]) return res.status(404).end("Oops... User with this ID didn't find");
 
-    res.status(200).send(JSON.parse(dataJSON));
+  dataJSON = JSON.stringify({ ...users, [userID]: user });
+  fs.writeFileSync(filePath, dataJSON);
+
+  return res.status(200).send(JSON.parse(dataJSON));
 });
 
-app.delete("/api/users/:id", function (req, res) {
-    
-    const userID = req.params.id;
-    
-    let dataJSON = fs.readFileSync(filePath, "utf8");
-    let users = JSON.parse(dataJSON);
-    let deletingUser = users[userID];
+app.delete('/api/users/:id', (req, res) => {
+  const userID = req.params.id;
 
-    if (!deletingUser) return res.status(404).end("Oops... I cannot DELETE user with this ID. I couldn't find him");
+  let dataJSON = fs.readFileSync(filePath, 'utf8');
+  const users = JSON.parse(dataJSON);
+  const deletingUser = users[userID];
 
-    deletingUser.isDeleted = true;
+  if (!deletingUser) return res.status(404).end("Oops... I cannot DELETE user with this ID. I couldn't find him");
 
-    dataJSON = JSON.stringify({...users, [userID]: deletingUser});
-    fs.writeFileSync(filePath, dataJSON);
+  deletingUser.isDeleted = true;
 
-    res.status(200).send(JSON.parse(dataJSON));
+  dataJSON = JSON.stringify({ ...users, [userID]: deletingUser });
+  fs.writeFileSync(filePath, dataJSON);
+
+  return res.status(200).send(JSON.parse(dataJSON));
 });
 
-app.listen(port, function(){
-    console.log(`Server running on port ${port}`);
+app.listen(port, () => {
+//   console.log(`Server running on port ${port}`);
 });

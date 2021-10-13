@@ -4,6 +4,8 @@
   "description": "tasks for RSS nodejs",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint --ext .js,.ts hw2 hw2/hw2_1",
+    "lint:fix": "npm run lint -- --fix",
     "test": "test",
     "task1_1": "nodemon ./hw1/task1_1.js",
     "task1_2": "nodemon ./hw1/task1_2.js",
@@ -29,6 +31,8 @@
     "@babel/core": "^7.15.5",
     "@babel/node": "^7.15.4",
     "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.25.2",
     "nodemon": "^2.0.12"
   },
   "dependencies": {
